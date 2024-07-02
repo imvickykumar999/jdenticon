@@ -1,4 +1,24 @@
-To better match the original identicon, we need to ensure the algorithm generates the correct symmetrical pattern. Here's the updated algorithm with adjustments for generating an identicon:
+GitHub's identicons are generated using the [jdenticon](https://jdenticon.com/) library, which creates unique visual representations based on hashes (like a username hash). The shapes and colors are determined algorithmically.
+
+![username_identicon](https://github.com/imvickykumar999/jdenticon/assets/50515418/ccb4d81b-b3bb-483f-a150-9f98fe799f75)
+
+### Shapes
+The number of possible shapes is determined by:
+1. **Grids**: Identicons typically use a 5x5 or 4x4 grid.
+2. **Patterns**: Each cell in the grid can be one of several possible patterns or be empty.
+
+### Colors
+The color is typically derived from the hash, leading to a vast number of potential colors.
+
+### Calculation Example
+If using a 5x5 grid:
+- Each cell can have one of `n` patterns (including an empty cell).
+- For `n` patterns, there are \( n^{25} \) possible combinations for the grid.
+
+### Colors
+- Assuming the color is chosen from a 24-bit RGB palette, there are \( 2^{24} \) possible colors (over 16 million).
+
+Thus, the total number of possible identicons can be immense, combining the variations in both shapes and colors. The exact number depends on the specific implementation details of the identicon generator.
 
 ```python
 import hashlib
