@@ -1,7 +1,7 @@
 import hashlib
 from PIL import Image, ImageDraw
 
-def generate_identicon(username, size=250, grid_size=5):
+def generate_identicon(username, size=250, grid_size=5, save_path="identicon.png"):
     # Step 1: Hash the username
     hash = hashlib.md5(username.encode('utf-8')).hexdigest()
     
@@ -13,7 +13,8 @@ def generate_identicon(username, size=250, grid_size=5):
     for i in range(0, 15, 3):
         grid.append([int(hash[i:i+1], 16) % 2, int(hash[i+1:i+2], 16) % 2, int(hash[i+2:i+3], 16) % 2])
     # Mirror the grid to ensure symmetry
-    grid = [row + row[::-1] for row in grid]
+    for row in grid:
+        row.extend(row[:-1][::-1])
     
     # Step 4: Draw the identicon
     img = Image.new('RGB', (grid_size*size//5, grid_size*size//5), (255, 255, 255))
@@ -28,7 +29,8 @@ def generate_identicon(username, size=250, grid_size=5):
                 )
     
     img = img.resize((size, size), Image.NEAREST)
-    img.show()
+    img.save(save_path)
+    print(f"Identicon saved to {save_path}")
 
 # Example usage
-generate_identicon("username")
+generate_identicon("username", save_path="username_identicon.png")
